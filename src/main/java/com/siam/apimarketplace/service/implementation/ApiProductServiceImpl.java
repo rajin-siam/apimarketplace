@@ -58,7 +58,6 @@ public class ApiProductServiceImpl implements ApiProductService {
 
         return productMapper.toDto(product);
     }
-    //TODO: improving exception handler
     @Transactional
     public ApiProductDto updateProduct(Integer id, ApiProductDto updateDto) {
         ApiProduct existingProduct = productRepository.findById(id)
