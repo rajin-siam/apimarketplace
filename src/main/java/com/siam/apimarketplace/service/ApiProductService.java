@@ -2,6 +2,7 @@ package com.siam.apimarketplace.service;
 
 import com.siam.apimarketplace.dto.ApiProductCreateDto;
 import com.siam.apimarketplace.dto.ApiProductDto;
+import com.siam.apimarketplace.dto.ApiResponse;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -10,13 +11,13 @@ import java.util.List;
 @Service
 public interface ApiProductService {
 
-    ApiProductDto createProduct(ApiProductCreateDto createDto);
+    ApiResponse createProduct(ApiProductCreateDto createDto);
 
     List<ApiProductDto> getAllProducts();
 
-    ApiProductDto getProductById(Long id);
+    ApiResponse<ApiProductDto> getProductById(Long id);
 
-    ApiProductDto updateProduct(Long id, ApiProductDto updateDto);
+    ApiResponse<ApiProductDto> updateProduct(Long id, ApiProductDto updateDto);
 
-    void deleteProduct(Long id);
+    ApiResponse<String> deleteProduct(Long id);
 }

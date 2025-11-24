@@ -1,5 +1,6 @@
 package com.siam.apimarketplace.exception;
 
+import com.siam.apimarketplace.dto.ApiResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
@@ -14,22 +15,33 @@ import java.util.Map;
 public class GlobalExceptionHandler {
 
 
+
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+    public ResponseEntity<ApiResponse> handleValidationExceptions(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach((error) -> {
             String fieldName = ((FieldError) error).getField();
             String errorMessage = error.getDefaultMessage();
             errors.put(fieldName, errorMessage);
         });
-        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+        return new ResponseEntity<>(new ApiResponse(errors.toString(), false, null), HttpStatus.BAD_REQUEST);
     }
+
+//    @ExceptionHandler(MethodArgumentNotValidException.class)
+//    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+//        Map<String, String> errors = new HashMap<>();
+//        ex.getBindingResult().getAllErrors().forEach((error) -> {
+//            String fieldName = ((FieldError) error).getField();
+//            String errorMessage = error.getDefaultMessage();
+//            errors.put(fieldName, errorMessage);
+//        });
+//        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+//    }
+
 
 
     @ExceptionHandler(Exception.class)
-    public ResponseEntity<String> handleAll(Exception ex) {
-        return ResponseEntity
-                .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                .body("Something went wrong: " + ex.getMessage());
+    public ResponseEntity<ApiResponse> handleAll(Exception ex) {
+        return new ResponseEntity<>(new ApiResponse(ex.getMessage(), false, null), HttpStatus.BAD_REQUEST);
     }
 }

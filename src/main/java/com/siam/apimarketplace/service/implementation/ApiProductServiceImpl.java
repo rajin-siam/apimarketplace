@@ -24,7 +24,7 @@ public class ApiProductServiceImpl implements ApiProductService {
     private final ApiItemMapper itemMapper;
 
     @Transactional
-    public ApiProductDto createProduct(ApiProductCreateDto createDto) {
+    public ApiResponse createProduct(ApiProductCreateDto createDto) {
         ApiProduct product = productMapper.toEntity(createDto);
 
         ApiProduct savedProduct = productRepository.save(product);
@@ -40,7 +40,7 @@ public class ApiProductServiceImpl implements ApiProductService {
                     .collect(Collectors.toList());
             itemRepository.saveAll(items);
         }
-        return productMapper.toDto(savedProduct);
+        return new ApiResponse("Product Created Successfully", true, null);
     }
 
 
@@ -51,14 +51,15 @@ public class ApiProductServiceImpl implements ApiProductService {
                 .collect(Collectors.toList());
     }
 
-    public ApiProductDto getProductById(Long id) {
+    public ApiResponse<ApiProductDto> getProductById(Long id) {
         ApiProduct product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
-        return productMapper.toDto(product);
+        ApiProductDto productDto = productMapper.toDto(product);
+        return new ApiResponse<>("Product found", true, productDto);
     }
     @Transactional
-    public ApiProductDto updateProduct(Long id, ApiProductDto updateDto) {
+    public ApiResponse<ApiProductDto> updateProduct(Long id, ApiProductDto updateDto) {
         ApiProduct existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
@@ -67,16 +68,17 @@ public class ApiProductServiceImpl implements ApiProductService {
         existingProduct.setFreeQuota(updateDto.freeQuota());
 
         ApiProduct updated = productRepository.save(existingProduct);
-        return productMapper.toDto(updated);
+        return new ApiResponse<>("Product updated successfully", true, productMapper.toDto(updated));
     }
 
     @Transactional
-    public void deleteProduct(Long id) {
+    public ApiResponse<String> deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found with id: " + id);
         }
 
         productRepository.deleteById(id);
+        return new ApiResponse("Product deleted successfully", true, null);
     }
 
 }

@@ -2,6 +2,7 @@ package com.siam.apimarketplace.controller;
 
 import com.siam.apimarketplace.dto.ApiProductCreateDto;
 import com.siam.apimarketplace.dto.ApiProductDto;
+import com.siam.apimarketplace.dto.ApiResponse;
 import com.siam.apimarketplace.service.ApiProductService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
@@ -21,9 +22,9 @@ public class ApiProductController {
     private final ApiProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiProductDto> createProduct(@Valid @RequestBody ApiProductCreateDto createDto) {
-        ApiProductDto created = productService.createProduct(createDto);
-        return new ResponseEntity<>(created, HttpStatus.CREATED);
+    public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody ApiProductCreateDto createDto) {
+        ApiResponse response = productService.createProduct(createDto);
+        return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
     @GetMapping
@@ -33,17 +34,17 @@ public class ApiProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiProductDto> getProductById(@PathVariable @Positive(message = "ID must be positive") Long id) {
-        ApiProductDto product = productService.getProductById(id);
-        return ResponseEntity.ok(product);
+    public ResponseEntity<ApiResponse> getProductById(@PathVariable @Positive(message = "ID must be positive") Long id) {
+        ApiResponse response = productService.getProductById(id);
+        return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiProductDto> updateProduct(
+    public ResponseEntity<ApiResponse> updateProduct(
             @PathVariable @Positive(message = "ID must be positive") Long id,
             @Valid @RequestBody ApiProductDto updateDto) {
-        ApiProductDto updated = productService.updateProduct(id, updateDto);
-        return ResponseEntity.ok(updated);
+        ApiResponse response = productService.updateProduct(id, updateDto);
+        return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")

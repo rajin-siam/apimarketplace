@@ -20,8 +20,5 @@ public record ApiProductDto(
 
         @NotNull(message = "Free quota is required")
         @PositiveOrZero(message = "Free quota must be zero or positive")
-        Double freeQuota,
-
-        @Valid
-        List<ApiItemDto> apiItems
+        Double freeQuota
 ) {}
