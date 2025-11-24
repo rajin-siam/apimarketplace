@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ApiItemRepository extends JpaRepository<ApiItem, Integer> {
-    List<ApiItem> findByApiProductId(Integer apiProductId);
+public interface ApiItemRepository extends JpaRepository<ApiItem, Long> {
+    List<ApiItem> findByApiProductId(Long apiProductId);
 
 }

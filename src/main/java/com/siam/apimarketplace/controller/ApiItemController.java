@@ -34,27 +34,27 @@ public class ApiItemController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiItemDto> getItemById(@PathVariable @Positive(message = "ID must be positive") Integer id) {
+    public ResponseEntity<ApiItemDto> getItemById(@PathVariable @Positive(message = "ID must be positive") Long id) {
         ApiItemDto item = itemService.getItemById(id);
         return ResponseEntity.ok(item);
     }
 
     @GetMapping("/product/{productId}")
-    public ResponseEntity<List<ApiItemDto>> getItemsByProduct(@PathVariable @Positive(message = "Product ID must be positive") Integer productId) {
+    public ResponseEntity<List<ApiItemDto>> getItemsByProduct(@PathVariable @Positive(message = "Product ID must be positive") Long productId) {
         List<ApiItemDto> items = itemService.getItemsByProductId(productId);
         return ResponseEntity.ok(items);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiItemDto> updateItem(
-            @PathVariable @Positive(message = "ID must be positive") Integer id,
+            @PathVariable @Positive(message = "ID must be positive") Long id,
             @Valid @RequestBody ApiItemDto updateDto) {
         ApiItemDto updated = itemService.updateItem(id, updateDto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteItem(@PathVariable @Positive(message = "ID must be positive") Integer id) {
+    public ResponseEntity<Void> deleteItem(@PathVariable @Positive(message = "ID must be positive") Long id) {
         itemService.deleteItem(id);
         return ResponseEntity.noContent().build();
     }

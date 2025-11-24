@@ -10,7 +10,7 @@ import java.util.List;
 public record ApiProductDto(
         @NotNull(message = "ID is required")
         @Positive(message = "ID must be positive")
-        Integer id,
+        Long id,
 
         @NotBlank(message = "Name is required")
         String name,

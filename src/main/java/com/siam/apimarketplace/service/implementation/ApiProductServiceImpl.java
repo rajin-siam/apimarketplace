@@ -30,7 +30,7 @@ public class ApiProductServiceImpl implements ApiProductService {
         ApiProduct savedProduct = productRepository.save(product);
 
         List<ApiItemCreateDto> itemDtos = createDto.apiItems();
-        if (itemDtos != null && itemDtos.size() > 0) {
+        if (itemDtos != null && !itemDtos.isEmpty()) {
             List<ApiItem> items = itemDtos.stream()
                     .map(itemDto -> {
                         ApiItem item = itemMapper.toEntity(itemDto);
@@ -39,7 +39,6 @@ public class ApiProductServiceImpl implements ApiProductService {
                     })
                     .collect(Collectors.toList());
             itemRepository.saveAll(items);
-            savedProduct.setApiItems(items);
         }
         return productMapper.toDto(savedProduct);
     }
@@ -52,14 +51,14 @@ public class ApiProductServiceImpl implements ApiProductService {
                 .collect(Collectors.toList());
     }
 
-    public ApiProductDto getProductById(Integer id) {
+    public ApiProductDto getProductById(Long id) {
         ApiProduct product = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
         return productMapper.toDto(product);
     }
     @Transactional
-    public ApiProductDto updateProduct(Integer id, ApiProductDto updateDto) {
+    public ApiProductDto updateProduct(Long id, ApiProductDto updateDto) {
         ApiProduct existingProduct = productRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Product not found with id: " + id));
 
@@ -72,7 +71,7 @@ public class ApiProductServiceImpl implements ApiProductService {
     }
 
     @Transactional
-    public void deleteProduct(Integer id) {
+    public void deleteProduct(Long id) {
         if (!productRepository.existsById(id)) {
             throw new RuntimeException("Product not found with id: " + id);
         }

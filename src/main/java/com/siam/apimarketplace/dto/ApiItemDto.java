@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Positive;
 public record ApiItemDto(
         @NotNull(message = "ID is required")
         @Positive(message = "ID must be positive")
-        Integer id,
+        Long id,
 
         @NotBlank(message = "Tier name is required")
         String tierName,
@@ -18,5 +18,5 @@ public record ApiItemDto(
 
         @NotNull(message = "API product ID is required")
         @Positive(message = "API product ID must be positive")
-        Integer apiProductId
+        Long apiProductId
 ) {}

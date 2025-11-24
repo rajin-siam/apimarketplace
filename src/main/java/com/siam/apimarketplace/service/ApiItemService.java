@@ -13,13 +13,13 @@ public interface ApiItemService {
 
     List<ApiItemDto> getAllItems();
 
-    ApiItemDto getItemById(Integer id);
+    ApiItemDto getItemById(Long id);
 
-    List<ApiItemDto> getItemsByProductId(Integer productId);
+    List<ApiItemDto> getItemsByProductId(Long productId);
 
-    ApiItemDto updateItem(Integer id, ApiItemDto updateDto);
+    ApiItemDto updateItem(Long id, ApiItemDto updateDto);
 
-    void deleteItem(Integer id);
+    void deleteItem(Long id);
 
-    void deleteAllItemsByProductId(Integer productId);
+    void deleteAllItemsByProductId(Long productId);
 }

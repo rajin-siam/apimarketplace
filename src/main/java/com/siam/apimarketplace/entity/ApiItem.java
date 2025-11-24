@@ -24,7 +24,7 @@ public class ApiItem {
             strategy = GenerationType.SEQUENCE,
             generator = "api_item_seq"
     )
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "Tier name is required")
     @Column(nullable = false)
@@ -36,8 +36,10 @@ public class ApiItem {
     private Double price;
 
     @NotNull(message = "API product is required")
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "api_product_id", nullable = false)
-    @JsonIgnore
     private ApiProduct apiProduct;
+
+    @Column(name = "api_product_id", insertable = false, updatable = false)
+    private Long apiProductId;
 }

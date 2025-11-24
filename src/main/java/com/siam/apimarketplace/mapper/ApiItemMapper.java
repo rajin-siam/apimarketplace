@@ -13,9 +13,9 @@ public interface ApiItemMapper {
             return null;
         }
 
-        Integer productId = null;
+        Long productId = null;
         if (apiItem.getApiProduct() != null) {
-            productId = apiItem.getApiProduct().getId();
+            productId = apiItem.getApiProductId();
         }
 
         return new ApiItemDto(
@@ -25,9 +25,6 @@ public interface ApiItemMapper {
                 productId
         );
     }
-
-    @Mapping(target = "apiProduct", ignore = true)
-    ApiItem toEntity(ApiItemDto dto);
 
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "apiProduct", ignore = true)

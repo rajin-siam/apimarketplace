@@ -11,5 +11,5 @@ public record ApiItemCreateDto(
         @NotNull(message = "Price is required")
         @Positive(message = "Price must be positive")
         Double price,
-        Integer apiProductId
+        Long apiProductId
 ) {}

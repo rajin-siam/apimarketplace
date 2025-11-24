@@ -33,21 +33,21 @@ public class ApiProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiProductDto> getProductById(@PathVariable @Positive(message = "ID must be positive") Integer id) {
+    public ResponseEntity<ApiProductDto> getProductById(@PathVariable @Positive(message = "ID must be positive") Long id) {
         ApiProductDto product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }
 
     @PutMapping("/{id}")
     public ResponseEntity<ApiProductDto> updateProduct(
-            @PathVariable @Positive(message = "ID must be positive") Integer id,
+            @PathVariable @Positive(message = "ID must be positive") Long id,
             @Valid @RequestBody ApiProductDto updateDto) {
         ApiProductDto updated = productService.updateProduct(id, updateDto);
         return ResponseEntity.ok(updated);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable @Positive(message = "ID must be positive") Integer id) {
+    public ResponseEntity<Void> deleteProduct(@PathVariable @Positive(message = "ID must be positive") Long id) {
         productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }

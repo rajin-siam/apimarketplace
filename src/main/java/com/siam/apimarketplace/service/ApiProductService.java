@@ -14,9 +14,9 @@ public interface ApiProductService {
 
     List<ApiProductDto> getAllProducts();
 
-    ApiProductDto getProductById(Integer id);
+    ApiProductDto getProductById(Long id);
 
-    ApiProductDto updateProduct(Integer id, ApiProductDto updateDto);
+    ApiProductDto updateProduct(Long id, ApiProductDto updateDto);
 
-    void deleteProduct(Integer id);
+    void deleteProduct(Long id);
 }

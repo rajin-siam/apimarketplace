@@ -25,7 +25,7 @@ public class ApiProduct {
             strategy = GenerationType.SEQUENCE,
             generator = "api_product_seq"
     )
-    private Integer id;
+    private Long id;
 
     @NotBlank(message = "Name is required")
     @Column(nullable = false)
@@ -40,6 +40,4 @@ public class ApiProduct {
     @Column(nullable = false)
     private Double freeQuota;
 
-    @OneToMany(mappedBy = "apiProduct", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<ApiItem> apiItems;
 }
