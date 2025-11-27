@@ -24,8 +24,9 @@ public class ApiProductServiceImpl implements ApiProductService {
     private final ApiItemMapper itemMapper;
 
     @Transactional
-    public ApiResponse createProduct(ApiProductCreateDto createDto) {
+    public ApiResponse<Void> createProduct(ApiProductCreateDto createDto) {
         ApiProduct product = productMapper.toEntity(createDto);
+        product.setIsActive(true);
 
         ApiProduct savedProduct = productRepository.save(product);
 
@@ -35,12 +36,13 @@ public class ApiProductServiceImpl implements ApiProductService {
                     .map(itemDto -> {
                         ApiItem item = itemMapper.toEntity(itemDto);
                         item.setApiProduct(savedProduct);
+                        item.setIsActive(true);
                         return item;
                     })
                     .collect(Collectors.toList());
             itemRepository.saveAll(items);
         }
-        return new ApiResponse("Product Created Successfully", true, null);
+        return new ApiResponse<>("Product Created Successfully", true, null);
     }
 
 
@@ -78,7 +80,7 @@ public class ApiProductServiceImpl implements ApiProductService {
         }
 
         productRepository.deleteById(id);
-        return new ApiResponse("Product deleted successfully", true, null);
+        return new ApiResponse<>("Product deleted successfully", true, null);
     }
 
 }

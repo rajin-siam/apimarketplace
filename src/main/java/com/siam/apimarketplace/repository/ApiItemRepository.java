@@ -10,4 +10,10 @@ import java.util.List;
 public interface ApiItemRepository extends JpaRepository<ApiItem, Long> {
     List<ApiItem> findByApiProductId(Long apiProductId);
 
+    // Find active items by product ID
+    List<ApiItem> findByApiProductIdAndIsActiveTrue(Long apiProductId);
+
+    // Find all active items
+    List<ApiItem> findByIsActiveTrue();
+
 }

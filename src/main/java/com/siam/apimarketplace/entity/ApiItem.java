@@ -1,18 +1,21 @@
 package com.siam.apimarketplace.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 @Entity
 @Table(name = "api_item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiItem {
+@SQLDelete(sql = "UPDATE api_item SET is_deleted = true WHERE id = ?")
+@SQLRestriction("is_deleted = false")
+public class ApiItem extends BaseEntity{
 
     @Id
     @SequenceGenerator(

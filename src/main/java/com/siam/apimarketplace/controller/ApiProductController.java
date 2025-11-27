@@ -22,8 +22,8 @@ public class ApiProductController {
     private final ApiProductService productService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse> createProduct(@Valid @RequestBody ApiProductCreateDto createDto) {
-        ApiResponse response = productService.createProduct(createDto);
+    public ResponseEntity<?> createProduct(@Valid @RequestBody ApiProductCreateDto createDto) {
+        var response = productService.createProduct(createDto);
         return new ResponseEntity<>(response, HttpStatus.CREATED);
     }
 
@@ -34,22 +34,22 @@ public class ApiProductController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse> getProductById(@PathVariable @Positive(message = "ID must be positive") Long id) {
-        ApiResponse response = productService.getProductById(id);
+    public ResponseEntity<?> getProductById(@PathVariable @Positive(message = "ID must be positive") Long id) {
+        var response = productService.getProductById(id);
         return ResponseEntity.ok(response);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse> updateProduct(
+    public ResponseEntity<?> updateProduct(
             @PathVariable @Positive(message = "ID must be positive") Long id,
             @Valid @RequestBody ApiProductDto updateDto) {
-        ApiResponse response = productService.updateProduct(id, updateDto);
+        var response = productService.updateProduct(id, updateDto);
         return ResponseEntity.ok(response);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteProduct(@PathVariable @Positive(message = "ID must be positive") Long id) {
-        productService.deleteProduct(id);
+    public ResponseEntity<?> deleteProduct(@PathVariable @Positive(message = "ID must be positive") Long id) {
+        ApiResponse<String> response = productService.deleteProduct(id);
         return ResponseEntity.noContent().build();
     }
 }

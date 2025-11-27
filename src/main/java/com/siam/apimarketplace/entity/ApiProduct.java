@@ -5,6 +5,8 @@ import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.*;
+import org.hibernate.annotations.SQLDelete;
+import org.hibernate.annotations.SQLRestriction;
 
 import java.util.List;
 
@@ -13,7 +15,9 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApiProduct {
+@SQLDelete(sql = "UPDATE api_product SET is_deleted = true WHERE id = ?")
+@SQLRestriction("is_deleted = false")
+public class ApiProduct extends BaseEntity {
 
     @Id
     @SequenceGenerator(
