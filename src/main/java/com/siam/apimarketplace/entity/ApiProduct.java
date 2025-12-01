@@ -1,5 +1,6 @@
 package com.siam.apimarketplace.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,7 +9,8 @@ import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.SQLRestriction;
 
-import java.util.List;
+import java.io.Serializable;
+
 
 @Entity
 @Table(name = "api_product")
@@ -17,7 +19,10 @@ import java.util.List;
 @AllArgsConstructor
 @SQLDelete(sql = "UPDATE api_product SET is_deleted = true WHERE id = ?")
 @SQLRestriction("is_deleted = false")
-public class ApiProduct extends BaseEntity {
+@JsonIgnoreProperties(ignoreUnknown = true)  // Ignore unknown JSON properties
+public class ApiProduct extends BaseEntity implements Serializable {
+
+    private static final long serialVersionUID = 1L;
 
     @Id
     @SequenceGenerator(
@@ -43,5 +48,4 @@ public class ApiProduct extends BaseEntity {
     @PositiveOrZero(message = "Free quota must be zero or positive")
     @Column(nullable = false)
     private Double freeQuota;
-
 }
